@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MvcApplication2.Models.Cupo>
+
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAlumno.cshtml";
+}
+
+<h2>Inscribirse</h2>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+<script>
+    $(function () {
+        
+        $("#id_quota").change(function () {
+            var id_ = $(this).children("option:selected").val();
+            //alert("You have selected - " + id_);
+            $(this).children("option:not(:selected)").each(function () { var i = $(this).val(); $("#descripcion_" + i).css("display", "none"); $("#profesor_" + i).css("display", "none"); });
+            
+            $("#descripcion_" + id_).css("display", "block");
+            $("#profesor_" + id_).css("display", "block");
+        });
+        
+    });
+</script>
+
+
+@using (Html.BeginForm("CreatePost", "Alumno", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Cupo</legend>
+        
+<div class="editor-label">
+            <label for="cupo">Materia</label>
+            
+        </div>
+
+        <div class="editor-label">
+           <select name="id_quota" id="id_quota">
+               <option selected="selected">Seleccione una materia</option>
+                @foreach (var item in Model)
+                {
+                    <option value="@item.id_cupo"> @item.MateriaString  [Disponibles: @item.maxAlumnos ] </option>
+                }
+        </select>
+        </div>
+                @foreach (var item in Model)
+                {
+                    <div id="profesor_@item.id_cupo" style="display:none">
+                        <h3>Profesor que dicta la materia:</h3>
+                        <h5>@item.ProfesorString</h5>
+                    </div>
+                    <div id="descripcion_@item.id_cupo" style="display:none">
+                        <h3>Descripcion de la materia:</h3>
+                        <h5>@item.descripcion</h5>
+
+                    </div>
+                }
+        
+
+        
+
+
+        <p>
+            <input type="submit" value="Inscribirse" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

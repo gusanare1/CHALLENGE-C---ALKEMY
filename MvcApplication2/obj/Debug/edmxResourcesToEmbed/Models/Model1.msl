@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="education_systemModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="business">
+      <EntityTypeMapping TypeName="education_systemModel.business">
+        <MappingFragment StoreEntitySet="business">
+          <ScalarProperty Name="id_business" ColumnName="id_business" />
+          <ScalarProperty Name="business_name" ColumnName="business_name" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="business_position">
+      <EntityTypeMapping TypeName="education_systemModel.business_position">
+        <MappingFragment StoreEntitySet="business_position">
+          <ScalarProperty Name="id_business_position" ColumnName="id_business_position" />
+          <ScalarProperty Name="business_id" ColumnName="business_id" />
+          <ScalarProperty Name="position_id" ColumnName="position_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="person">
+      <EntityTypeMapping TypeName="education_systemModel.person">
+        <MappingFragment StoreEntitySet="person">
+          <ScalarProperty Name="id_person" ColumnName="id_person" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="second_last_name" ColumnName="second_last_name" />
+          <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+          <ScalarProperty Name="cedula" ColumnName="cedula" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="person_business_position">
+      <EntityTypeMapping TypeName="education_systemModel.person_business_position">
+        <MappingFragment StoreEntitySet="person_business_position">
+          <ScalarProperty Name="id_person_business_position" ColumnName="id_person_business_position" />
+          <ScalarProperty Name="person_id" ColumnName="person_id" />
+          <ScalarProperty Name="business_position_id" ColumnName="business_position_id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="pwd" ColumnName="pwd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="position">
+      <EntityTypeMapping TypeName="education_systemModel.position">
+        <MappingFragment StoreEntitySet="position">
+          <ScalarProperty Name="id_position" ColumnName="id_position" />
+          <ScalarProperty Name="position_name" ColumnName="position_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="quota">
+      <EntityTypeMapping TypeName="education_systemModel.quota">
+        <MappingFragment StoreEntitySet="quota">
+          <ScalarProperty Name="id_quota" ColumnName="id_quota" />
+          <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+          <ScalarProperty Name="alumno_id" ColumnName="alumno_id" />
+          <ScalarProperty Name="profesor_id" ColumnName="profesor_id" />
+          <ScalarProperty Name="periodo" ColumnName="periodo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="scores">
+      <EntityTypeMapping TypeName="education_systemModel.scores">
+        <MappingFragment StoreEntitySet="scores">
+          <ScalarProperty Name="id_scores" ColumnName="id_scores" />
+          <ScalarProperty Name="scores1" ColumnName="scores" />
+          <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+          <ScalarProperty Name="quota_id" ColumnName="quota_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="subject">
+      <EntityTypeMapping TypeName="education_systemModel.subject">
+        <MappingFragment StoreEntitySet="subject">
+          <ScalarProperty Name="id_subject" ColumnName="id_subject" />
+          <ScalarProperty Name="codigo_subject" ColumnName="codigo_subject" />
+          <ScalarProperty Name="nombre_subject" ColumnName="nombre_subject" />
+          <ScalarProperty Name="max_alumnos" ColumnName="max_alumnos" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

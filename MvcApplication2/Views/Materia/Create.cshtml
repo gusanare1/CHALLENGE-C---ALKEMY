@@ -1,0 +1,92 @@
+﻿@model MvcApplication2.Models.subject
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("CreatePost", "Materia", FormMethod.Post))
+{   @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Materia</legend>
+
+       
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.codigo_subject)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.codigo_subject)
+            @Html.ValidationMessageFor(model => model.codigo_subject)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.nombre_subject)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.nombre_subject)
+            @Html.ValidationMessageFor(model => model.nombre_subject)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.max_alumnos)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.max_alumnos)
+            @Html.ValidationMessageFor(model => model.max_alumnos)
+        </div>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.descripcion)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.descripcion, new {@rows=5, @columns=40 } )
+            @Html.ValidationMessageFor(model => model.descripcion)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.hora_entrada)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.hora_entrada, new {@class="timepicker", @type="time" } )
+            @Html.ValidationMessageFor(model => model.hora_entrada)
+        </div>
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.hora_salida)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.hora_salida, new { @type="time" } )
+            @Html.ValidationMessageFor(model => model.hora_salida)
+        </div>
+
+        <div class="editor-field">
+            <label for="profesores">Profesor</label>
+            <select name="profesor_id">
+                @foreach (var row in Model.profesores)
+                {
+                 <option value="@row.id_person" >@row.first_name @row.last_name</option>
+                }
+            </select>
+        </div>
+        
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

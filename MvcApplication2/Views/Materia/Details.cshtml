@@ -1,0 +1,60 @@
+﻿@model MvcApplication2.Models.subject
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>subject</legend>
+
+    
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.codigo_subject)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.codigo_subject)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.nombre_subject)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.nombre_subject)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.max_alumnos)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.max_alumnos)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.max_alumnos)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.descripcion)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.hora_entrada)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.hora_entrada)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.hora_salida)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.hora_salida)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.id_subject }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

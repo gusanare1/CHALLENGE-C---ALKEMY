@@ -1,0 +1,572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="education_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="business">
+          <Key>
+            <PropertyRef Name="id_business" />
+          </Key>
+          <Property Name="id_business" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="business_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="adress" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="business_position">
+          <Key>
+            <PropertyRef Name="id_business_position" />
+          </Key>
+          <Property Name="id_business_position" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="business_id" Type="int" />
+          <Property Name="position_id" Type="int" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="id_person" />
+          </Key>
+          <Property Name="id_person" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="second_last_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="cedula" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="person_business_position">
+          <Key>
+            <PropertyRef Name="id_person_business_position" />
+          </Key>
+          <Property Name="id_person_business_position" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="person_id" Type="int" />
+          <Property Name="business_position_id" Type="int" />
+          <Property Name="username" Type="nvarchar" MaxLength="10" />
+          <Property Name="pwd" Type="nvarchar" MaxLength="10" />
+          <Property Name="estado" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="id_position" />
+          </Key>
+          <Property Name="id_position" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="position_name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="quota">
+          <Key>
+            <PropertyRef Name="id_quota" />
+          </Key>
+          <Property Name="id_quota" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subject_id" Type="int" />
+          <Property Name="alumno_id" Type="int" />
+          <Property Name="profesor_id" Type="int" />
+          <Property Name="periodo" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="scores">
+          <Key>
+            <PropertyRef Name="id_scores" />
+          </Key>
+          <Property Name="id_scores" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="scores" Type="float" />
+          <Property Name="fecha_ingreso" Type="date" />
+          <Property Name="quota_id" Type="int" />
+        </EntityType>
+        <EntityType Name="subject">
+          <Key>
+            <PropertyRef Name="id_subject" />
+          </Key>
+          <Property Name="id_subject" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigo_subject" Type="nvarchar" MaxLength="10" />
+          <Property Name="nombre_subject" Type="nvarchar" MaxLength="10" />
+          <Property Name="max_alumnos" Type="int" />
+          <Property Name="descripcion" Type="nchar" MaxLength="100" />
+          <Property Name="hora_entrada" Type="time" Precision="7" />
+          <Property Name="hora_salida" Type="time" Precision="7" />
+        </EntityType>
+        <Association Name="fk_business_position_business">
+          <End Role="business" Type="Self.business" Multiplicity="0..1" />
+          <End Role="business_position" Type="Self.business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="business">
+              <PropertyRef Name="id_business" />
+            </Principal>
+            <Dependent Role="business_position">
+              <PropertyRef Name="business_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_business_position_position">
+          <End Role="position" Type="Self.position" Multiplicity="0..1" />
+          <End Role="business_position" Type="Self.business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="id_position" />
+            </Principal>
+            <Dependent Role="business_position">
+              <PropertyRef Name="position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_quota_person_alumno">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="quota" Type="Self.quota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="id_person" />
+            </Principal>
+            <Dependent Role="quota">
+              <PropertyRef Name="alumno_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_quota_person_profesor">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="quota" Type="Self.quota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="id_person" />
+            </Principal>
+            <Dependent Role="quota">
+              <PropertyRef Name="profesor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_quota_subject">
+          <End Role="subject" Type="Self.subject" Multiplicity="0..1" />
+          <End Role="quota" Type="Self.quota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subject">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="quota">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_scores_quota">
+          <End Role="quota" Type="Self.quota" Multiplicity="0..1" />
+          <End Role="scores" Type="Self.scores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quota">
+              <PropertyRef Name="id_quota" />
+            </Principal>
+            <Dependent Role="scores">
+              <PropertyRef Name="quota_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="person_business_position_business_position">
+          <End Role="business_position" Type="Self.business_position" Multiplicity="0..1" />
+          <End Role="person_business_position" Type="Self.person_business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="business_position">
+              <PropertyRef Name="id_business_position" />
+            </Principal>
+            <Dependent Role="person_business_position">
+              <PropertyRef Name="business_position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="person_business_position_person">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="person_business_position" Type="Self.person_business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="id_person" />
+            </Principal>
+            <Dependent Role="person_business_position">
+              <PropertyRef Name="person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="education_systemModelStoreContainer">
+          <EntitySet Name="business" EntityType="Self.business" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="business_position" EntityType="Self.business_position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="person" EntityType="Self.person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="person_business_position" EntityType="Self.person_business_position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="position" EntityType="Self.position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quota" EntityType="Self.quota" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scores" EntityType="Self.scores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subject" EntityType="Self.subject" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_business_position_business" Association="Self.fk_business_position_business">
+            <End Role="business" EntitySet="business" />
+            <End Role="business_position" EntitySet="business_position" />
+          </AssociationSet>
+          <AssociationSet Name="fk_business_position_position" Association="Self.fk_business_position_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="business_position" EntitySet="business_position" />
+          </AssociationSet>
+          <AssociationSet Name="fk_quota_person_alumno" Association="Self.fk_quota_person_alumno">
+            <End Role="person" EntitySet="person" />
+            <End Role="quota" EntitySet="quota" />
+          </AssociationSet>
+          <AssociationSet Name="fk_quota_person_profesor" Association="Self.fk_quota_person_profesor">
+            <End Role="person" EntitySet="person" />
+            <End Role="quota" EntitySet="quota" />
+          </AssociationSet>
+          <AssociationSet Name="fk_quota_subject" Association="Self.fk_quota_subject">
+            <End Role="subject" EntitySet="subject" />
+            <End Role="quota" EntitySet="quota" />
+          </AssociationSet>
+          <AssociationSet Name="fk_scores_quota" Association="Self.fk_scores_quota">
+            <End Role="quota" EntitySet="quota" />
+            <End Role="scores" EntitySet="scores" />
+          </AssociationSet>
+          <AssociationSet Name="person_business_position_business_position" Association="Self.person_business_position_business_position">
+            <End Role="business_position" EntitySet="business_position" />
+            <End Role="person_business_position" EntitySet="person_business_position" />
+          </AssociationSet>
+          <AssociationSet Name="person_business_position_person" Association="Self.person_business_position_person">
+            <End Role="person" EntitySet="person" />
+            <End Role="person_business_position" EntitySet="person_business_position" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="education_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="business">
+          <Key>
+            <PropertyRef Name="id_business" />
+          </Key>
+          <Property Name="id_business" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="business_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="adress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="business_position" Relationship="Self.fk_business_position_business" FromRole="business" ToRole="business_position" />
+        </EntityType>
+        <EntityType Name="business_position">
+          <Key>
+            <PropertyRef Name="id_business_position" />
+          </Key>
+          <Property Name="id_business_position" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="business_id" Type="Int32" />
+          <Property Name="position_id" Type="Int32" />
+          <NavigationProperty Name="business" Relationship="Self.fk_business_position_business" FromRole="business_position" ToRole="business" />
+          <NavigationProperty Name="position" Relationship="Self.fk_business_position_position" FromRole="business_position" ToRole="position" />
+          <NavigationProperty Name="person_business_position" Relationship="Self.person_business_position_business_position" FromRole="business_position" ToRole="person_business_position" />
+        </EntityType>
+        <EntityType Name="person">
+          <Key>
+            <PropertyRef Name="id_person" />
+          </Key>
+          <Property Name="id_person" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="middle_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="second_last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="cedula" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="quota" Relationship="Self.fk_quota_person_alumno" FromRole="person" ToRole="quota" />
+          <NavigationProperty Name="quota1" Relationship="Self.fk_quota_person_profesor" FromRole="person" ToRole="quota" />
+          <NavigationProperty Name="person_business_position" Relationship="Self.person_business_position_person" FromRole="person" ToRole="person_business_position" />
+        </EntityType>
+        <EntityType Name="person_business_position">
+          <Key>
+            <PropertyRef Name="id_person_business_position" />
+          </Key>
+          <Property Name="id_person_business_position" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="person_id" Type="Int32" />
+          <Property Name="business_position_id" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="pwd" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="business_position" Relationship="Self.person_business_position_business_position" FromRole="person_business_position" ToRole="business_position" />
+          <NavigationProperty Name="person" Relationship="Self.person_business_position_person" FromRole="person_business_position" ToRole="person" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="id_position" />
+          </Key>
+          <Property Name="id_position" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="position_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="business_position" Relationship="Self.fk_business_position_position" FromRole="position" ToRole="business_position" />
+        </EntityType>
+        <EntityType Name="quota">
+          <Key>
+            <PropertyRef Name="id_quota" />
+          </Key>
+          <Property Name="id_quota" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subject_id" Type="Int32" />
+          <Property Name="alumno_id" Type="Int32" />
+          <Property Name="profesor_id" Type="Int32" />
+          <Property Name="periodo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="person" Relationship="Self.fk_quota_person_alumno" FromRole="quota" ToRole="person" />
+          <NavigationProperty Name="person1" Relationship="Self.fk_quota_person_profesor" FromRole="quota" ToRole="person" />
+          <NavigationProperty Name="subject" Relationship="Self.fk_quota_subject" FromRole="quota" ToRole="subject" />
+          <NavigationProperty Name="scores" Relationship="Self.fk_scores_quota" FromRole="quota" ToRole="scores" />
+        </EntityType>
+        <EntityType Name="scores">
+          <Key>
+            <PropertyRef Name="id_scores" />
+          </Key>
+          <Property Name="id_scores" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="scores1" Type="Double" />
+          <Property Name="fecha_ingreso" Type="DateTime" Precision="0" />
+          <Property Name="quota_id" Type="Int32" />
+          <NavigationProperty Name="quota" Relationship="Self.fk_scores_quota" FromRole="scores" ToRole="quota" />
+        </EntityType>
+        <EntityType Name="subject">
+          <Key>
+            <PropertyRef Name="id_subject" />
+          </Key>
+          <Property Name="id_subject" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigo_subject" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="nombre_subject" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="max_alumnos" Type="Int32" />
+          <NavigationProperty Name="quota" Relationship="Self.fk_quota_subject" FromRole="subject" ToRole="quota" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="hora_entrada" Type="Time" Precision="7" />
+          <Property Name="hora_salida" Type="Time" Precision="7" />
+        </EntityType>
+        <Association Name="fk_business_position_business">
+          <End Role="business" Type="Self.business" Multiplicity="0..1" />
+          <End Role="business_position" Type="Self.business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="business">
+              <PropertyRef Name="id_business" />
+            </Principal>
+            <Dependent Role="business_position">
+              <PropertyRef Name="business_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_business_position_position">
+          <End Role="position" Type="Self.position" Multiplicity="0..1" />
+          <End Role="business_position" Type="Self.business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="id_position" />
+            </Principal>
+            <Dependent Role="business_position">
+              <PropertyRef Name="position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="person_business_position_business_position">
+          <End Role="business_position" Type="Self.business_position" Multiplicity="0..1" />
+          <End Role="person_business_position" Type="Self.person_business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="business_position">
+              <PropertyRef Name="id_business_position" />
+            </Principal>
+            <Dependent Role="person_business_position">
+              <PropertyRef Name="business_position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_quota_person_alumno">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="quota" Type="Self.quota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="id_person" />
+            </Principal>
+            <Dependent Role="quota">
+              <PropertyRef Name="alumno_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_quota_person_profesor">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="quota" Type="Self.quota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="id_person" />
+            </Principal>
+            <Dependent Role="quota">
+              <PropertyRef Name="profesor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="person_business_position_person">
+          <End Role="person" Type="Self.person" Multiplicity="0..1" />
+          <End Role="person_business_position" Type="Self.person_business_position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="person">
+              <PropertyRef Name="id_person" />
+            </Principal>
+            <Dependent Role="person_business_position">
+              <PropertyRef Name="person_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_quota_subject">
+          <End Role="subject" Type="Self.subject" Multiplicity="0..1" />
+          <End Role="quota" Type="Self.quota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subject">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="quota">
+              <PropertyRef Name="subject_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_scores_quota">
+          <End Role="quota" Type="Self.quota" Multiplicity="0..1" />
+          <End Role="scores" Type="Self.scores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quota">
+              <PropertyRef Name="id_quota" />
+            </Principal>
+            <Dependent Role="scores">
+              <PropertyRef Name="quota_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="education_systemEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="business" EntityType="Self.business" />
+          <EntitySet Name="business_position" EntityType="Self.business_position" />
+          <EntitySet Name="person" EntityType="Self.person" />
+          <EntitySet Name="person_business_position" EntityType="Self.person_business_position" />
+          <EntitySet Name="position" EntityType="Self.position" />
+          <EntitySet Name="quota" EntityType="Self.quota" />
+          <EntitySet Name="scores" EntityType="Self.scores" />
+          <EntitySet Name="subject" EntityType="Self.subject" />
+          <AssociationSet Name="fk_business_position_business" Association="Self.fk_business_position_business">
+            <End Role="business" EntitySet="business" />
+            <End Role="business_position" EntitySet="business_position" />
+          </AssociationSet>
+          <AssociationSet Name="fk_business_position_position" Association="Self.fk_business_position_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="business_position" EntitySet="business_position" />
+          </AssociationSet>
+          <AssociationSet Name="person_business_position_business_position" Association="Self.person_business_position_business_position">
+            <End Role="business_position" EntitySet="business_position" />
+            <End Role="person_business_position" EntitySet="person_business_position" />
+          </AssociationSet>
+          <AssociationSet Name="fk_quota_person_alumno" Association="Self.fk_quota_person_alumno">
+            <End Role="person" EntitySet="person" />
+            <End Role="quota" EntitySet="quota" />
+          </AssociationSet>
+          <AssociationSet Name="fk_quota_person_profesor" Association="Self.fk_quota_person_profesor">
+            <End Role="person" EntitySet="person" />
+            <End Role="quota" EntitySet="quota" />
+          </AssociationSet>
+          <AssociationSet Name="person_business_position_person" Association="Self.person_business_position_person">
+            <End Role="person" EntitySet="person" />
+            <End Role="person_business_position" EntitySet="person_business_position" />
+          </AssociationSet>
+          <AssociationSet Name="fk_quota_subject" Association="Self.fk_quota_subject">
+            <End Role="subject" EntitySet="subject" />
+            <End Role="quota" EntitySet="quota" />
+          </AssociationSet>
+          <AssociationSet Name="fk_scores_quota" Association="Self.fk_scores_quota">
+            <End Role="quota" EntitySet="quota" />
+            <End Role="scores" EntitySet="scores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="education_systemModelStoreContainer" CdmEntityContainer="education_systemEntities1">
+          <EntitySetMapping Name="business">
+            <EntityTypeMapping TypeName="education_systemModel.business">
+              <MappingFragment StoreEntitySet="business">
+                <ScalarProperty Name="id_business" ColumnName="id_business" />
+                <ScalarProperty Name="business_name" ColumnName="business_name" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="business_position">
+            <EntityTypeMapping TypeName="education_systemModel.business_position">
+              <MappingFragment StoreEntitySet="business_position">
+                <ScalarProperty Name="id_business_position" ColumnName="id_business_position" />
+                <ScalarProperty Name="business_id" ColumnName="business_id" />
+                <ScalarProperty Name="position_id" ColumnName="position_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="person">
+            <EntityTypeMapping TypeName="education_systemModel.person">
+              <MappingFragment StoreEntitySet="person">
+                <ScalarProperty Name="id_person" ColumnName="id_person" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="second_last_name" ColumnName="second_last_name" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="cedula" ColumnName="cedula" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="person_business_position">
+            <EntityTypeMapping TypeName="education_systemModel.person_business_position">
+              <MappingFragment StoreEntitySet="person_business_position">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="id_person_business_position" ColumnName="id_person_business_position" />
+                <ScalarProperty Name="person_id" ColumnName="person_id" />
+                <ScalarProperty Name="business_position_id" ColumnName="business_position_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="position">
+            <EntityTypeMapping TypeName="education_systemModel.position">
+              <MappingFragment StoreEntitySet="position">
+                <ScalarProperty Name="id_position" ColumnName="id_position" />
+                <ScalarProperty Name="position_name" ColumnName="position_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quota">
+            <EntityTypeMapping TypeName="education_systemModel.quota">
+              <MappingFragment StoreEntitySet="quota">
+                <ScalarProperty Name="id_quota" ColumnName="id_quota" />
+                <ScalarProperty Name="subject_id" ColumnName="subject_id" />
+                <ScalarProperty Name="alumno_id" ColumnName="alumno_id" />
+                <ScalarProperty Name="profesor_id" ColumnName="profesor_id" />
+                <ScalarProperty Name="periodo" ColumnName="periodo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scores">
+            <EntityTypeMapping TypeName="education_systemModel.scores">
+              <MappingFragment StoreEntitySet="scores">
+                <ScalarProperty Name="id_scores" ColumnName="id_scores" />
+                <ScalarProperty Name="scores1" ColumnName="scores" />
+                <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+                <ScalarProperty Name="quota_id" ColumnName="quota_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subject">
+            <EntityTypeMapping TypeName="education_systemModel.subject">
+              <MappingFragment StoreEntitySet="subject">
+                <ScalarProperty Name="hora_salida" ColumnName="hora_salida" />
+                <ScalarProperty Name="hora_entrada" ColumnName="hora_entrada" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_subject" ColumnName="id_subject" />
+                <ScalarProperty Name="codigo_subject" ColumnName="codigo_subject" />
+                <ScalarProperty Name="nombre_subject" ColumnName="nombre_subject" />
+                <ScalarProperty Name="max_alumnos" ColumnName="max_alumnos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

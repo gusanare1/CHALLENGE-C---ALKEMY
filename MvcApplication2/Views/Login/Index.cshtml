@@ -1,0 +1,38 @@
+﻿@model MvcApplication2.Models.person_business_position
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h1>Login</h1>
+    @if (ViewBag.Message != null)
+    {
+        <div>@ViewBag.Message</div>
+    }
+    @using (Html.BeginForm("loginPost", "Login", FormMethod.Post)) { 
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true);
+        <div>
+             @Html.TextBoxFor(m => m.username,
+                                  new
+                                  {
+                                      @placeholder = "Username",
+                                      @requried = "required"
+                                  }
+                             )
+
+            @Html.TextBoxFor(m => m.pwd,
+                                  new
+                                  {
+                                      @type="password",
+                                      @placeholder = "Password",
+                                      @requried = "required"
+                                  }
+                             )
+            <input type="submit" value="Submit" />
+        </div>
+    }
+</body>
+</html>

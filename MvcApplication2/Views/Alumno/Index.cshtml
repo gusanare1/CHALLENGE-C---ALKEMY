@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MvcApplication2.Models.quota>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAlumno.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Inscribirse en Materia", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Materia
+        </th>
+        <th>
+            Hora de entrada
+        </th>
+        <th>
+            Hora de salida
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.subject.nombre_subject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.subject.hora_entrada)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.subject.hora_salida)
+        </td>
+     
+        
+    </tr>
+}
+
+</table>

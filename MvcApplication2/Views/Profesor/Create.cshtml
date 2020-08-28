@@ -1,0 +1,85 @@
+﻿@model MvcApplication2.Models.person
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>person</legend>
+
+       
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.first_name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.first_name)
+            @Html.ValidationMessageFor(model => model.first_name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.middle_name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.middle_name)
+            @Html.ValidationMessageFor(model => model.middle_name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.last_name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.last_name)
+            @Html.ValidationMessageFor(model => model.last_name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.second_last_name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.second_last_name)
+            @Html.ValidationMessageFor(model => model.second_last_name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.fecha_nacimiento)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model=>model.fecha_nacimiento, "{0:yyyy-MM-dd}", new { @class = "datepicker", @type="date" })
+            @Html.ValidationMessageFor(model => model.fecha_nacimiento)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.cedula)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.cedula)
+            @Html.ValidationMessageFor(model => model.cedula)
+        </div>
+      
+
+        
+
+        <div>
+            <label for="boton">login</label>
+            <input type="text" name="login"/>    
+        </div>
+
+        <input type="submit" value="Create" />
+        
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
